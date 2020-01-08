@@ -3,13 +3,18 @@
         {
             "name": "Linux",
             "includePath": [
+                "/home/saepul/Documents/arduino-1.8.10/tools/**",
+                "/home/saepul/Documents/arduino-1.8.10/hardware/arduino/avr/**",
                 "${workspaceFolder}/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64"
+            "intelliSenseMode": "gcc-x64",
+            "forcedInclude": [
+                "/home/saepul/Documents/arduino-1.8.10/hardware/arduino/avr/cores/arduino/Arduino.h"
+            ]
         }
     ],
     "version": 4
