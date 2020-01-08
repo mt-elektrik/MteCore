@@ -51,5 +51,7 @@ static InputEvent IN1(2);
 // InputEvent IN11(A6);
 // InputEvent IN12(A4);
 // #endif //_MTE_FCORE_H
-
+void process(){
+  IN1.process();
+}
 #endif
