@@ -1,57 +1,57 @@
-// #ifdef _MTE_CORE_H
-#ifndef _OUTPUT_EVENT_H 
-#define _OUTPUT_EVENT_H 
+#ifdef _MTE_CORE_H
+#ifndef _OUTPUT_CORE_H 
+#define _OUTPUT_CORE_H 
 #include "Arduino.h"
 
 
-typedef void(*OutputEvent_State_Callback)();
+typedef void(*OutputCore_State_Callback)();
 
-class OutputEvent {
+class OutputCore {
     protected:
     private:
         bool firstState;
-        OutputEvent(const OutputEvent&);
-        OutputEvent& operator=(const OutputEvent&);
+        OutputCore(const OutputCore&);
+        OutputCore& operator=(const OutputCore&);
         const uint8_t debounceDelay = 20;
         unsigned long lastDebounceTime;
         bool lastState=LOW;
         uint8_t _pinIn;
-        OutputEvent_State_Callback _cba;
-        OutputEvent_State_Callback _cbna;
-        OutputEvent_State_Callback _cbc;
+        OutputCore_State_Callback _cba;
+        OutputCore_State_Callback _cbna;
+        OutputCore_State_Callback _cbc;
     public:
-        explicit OutputEvent(uint8_t pinIn);
-        virtual~OutputEvent();
-        void onEnable(OutputEvent_State_Callback cb);
-        void onDisable(OutputEvent_State_Callback cb);
-        void onChange(OutputEvent_State_Callback cb);
+        explicit OutputCore(uint8_t pinIn);
+        virtual~OutputCore();
+        void onEnable(OutputCore_State_Callback cb);
+        void onDisable(OutputCore_State_Callback cb);
+        void onChange(OutputCore_State_Callback cb);
         bool isEnable();
-        void process();
+        void process(unsigned long now);
         bool enable();
         bool disable();
 };
-OutputEvent::OutputEvent(uint8_t pinIn) {
+OutputCore::OutputCore(uint8_t pinIn) {
     _pinIn=pinIn;
     pinMode(pinIn,OUTPUT);
 }
 
-OutputEvent::~OutputEvent() {}
+OutputCore::~OutputCore() {}
 
-void OutputEvent::onEnable(OutputEvent_State_Callback cb) {
+void OutputCore::onEnable(OutputCore_State_Callback cb) {
     _cba=cb;
 }
-void OutputEvent::onDisable(OutputEvent_State_Callback cb ){
+void OutputCore::onDisable(OutputCore_State_Callback cb ){
     _cbna=cb;
 }
-void OutputEvent::onChange(OutputEvent_State_Callback cb){
+void OutputCore::onChange(OutputCore_State_Callback cb){
     _cbc=cb;
 }
-bool OutputEvent::isEnable(){
+bool OutputCore::isEnable(){
     return !digitalRead(_pinIn);
 }
-void OutputEvent::process(){
+void OutputCore::process(unsigned long now){
   int reading = digitalRead(_pinIn);
-  if (millis() - lastDebounceTime > debounceDelay) {
+  if (now - lastDebounceTime > debounceDelay) {
         if(reading!=lastState){
             firstState=true;
                 /* onChange */
@@ -87,14 +87,16 @@ void OutputEvent::process(){
             }
         }
     lastState = reading;
-    lastDebounceTime = millis();  
+    lastDebounceTime = now;  
   }
 }
-bool OutputEvent::enable(){
+bool OutputCore::enable(){
     digitalWrite(_pinIn,HIGH);
+    return digitalRead(_pinIn)==HIGH;
 }
-bool OutputEvent::disable(){
+bool OutputCore::disable(){
     digitalWrite(_pinIn,LOW);
+    return digitalRead(_pinIn)==LOW;
 }
-#endif //_OUTPUT_EVENT_H
-// #endif //_MTE_CORE_H
+#endif //_OUTPUT_CORE_H
+#endif //_MTE_CORE_H

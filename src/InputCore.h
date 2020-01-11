@@ -1,54 +1,54 @@
-// #ifdef _MTE_CORE_H
-#ifndef _INPUT_EVENT_H 
-#define _INPUT_EVENT_H 
+#ifdef _MTE_CORE_H
+#ifndef _INPUT_CORE_H 
+#define _INPUT_CORE_H 
 #include "Arduino.h"
 
 
-typedef void(*inputEvent_State_Callback)();
+typedef void(*inputCore_State_Callback)();
 
-class InputEvent {
+class InputCore {
     protected:
     private:
         bool firstState;
-        InputEvent(const InputEvent&);
-        InputEvent& operator=(const InputEvent&);
+        InputCore(const InputCore&);
+        InputCore& operator=(const InputCore&);
         const uint8_t debounceDelay = 20;
         unsigned long lastDebounceTime;
         bool lastState=HIGH;
         bool lastStateOnChange=HIGH;
         uint8_t _pinIn;
-        inputEvent_State_Callback _cba;
-        inputEvent_State_Callback _cbna;
-        inputEvent_State_Callback _cbc;
+        inputCore_State_Callback _cba;
+        inputCore_State_Callback _cbna;
+        inputCore_State_Callback _cbc;
     public:
-        explicit InputEvent(uint8_t pinIn);
-        virtual~InputEvent();
-        void onEnable(inputEvent_State_Callback cb);
-        void onDisable(inputEvent_State_Callback cb);
-        void onChange(inputEvent_State_Callback cb);
+        explicit InputCore(uint8_t pinIn);
+        virtual~InputCore();
+        void onEnable(inputCore_State_Callback cb);
+        void onDisable(inputCore_State_Callback cb);
+        void onChange(inputCore_State_Callback cb);
         bool onEnable();
         void process(unsigned long now);
 };
-InputEvent::InputEvent(uint8_t pinIn) {
+InputCore::InputCore(uint8_t pinIn) {
     _pinIn=pinIn;
     pinMode(pinIn,INPUT_PULLUP);
 }
 
-InputEvent::~InputEvent() {}
+InputCore::~InputCore() {}
 
-void InputEvent::onEnable(inputEvent_State_Callback cb) {
+void InputCore::onEnable(inputCore_State_Callback cb) {
     _cba=cb;
 }
-void InputEvent::onDisable(inputEvent_State_Callback cb ){
+void InputCore::onDisable(inputCore_State_Callback cb ){
     _cbna=cb;
 }
-void InputEvent::onChange(inputEvent_State_Callback cb){
+void InputCore::onChange(inputCore_State_Callback cb){
     _cbc=cb;
 }
-bool InputEvent::onEnable(){
+bool InputCore::onEnable(){
     return !digitalRead(_pinIn);
 }
-void InputEvent::process(unsigned long now){
+void InputCore::process(unsigned long now){
   int reading = digitalRead(_pinIn);
   if (now - lastDebounceTime > debounceDelay) {
         if(reading!=lastState){
@@ -90,5 +90,5 @@ void InputEvent::process(unsigned long now){
   }
 }
 
-#endif //_INPUT_EVENT_H
-// #endif //_MTE_CORE_H
+#endif //_INPUT_CORE_H
+#endif //_MTE_CORE_H

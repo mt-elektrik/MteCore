@@ -1,9 +1,10 @@
 #include "MteCore.h"
-void callback_OnActive(){
-    Serial.println("onActive");
+#include "TimerCore.h"
+void callback_onEnable(){
+    Serial.println("onEnable");
 }
-void callback_OnNotActive(){
-    Serial.println("onNotActive");
+void callback_onDisable(){
+    Serial.println("onDisable");
 }
 void callback_OnChange(){
     Serial.println("onChange");
@@ -11,10 +12,10 @@ void callback_OnChange(){
 void setup(){
     Serial.begin(9600);
     
-    IN11.onActive(callback_OnActive);
-    IN11.onNotActive(callback_OnNotActive);
+    IN11.onEnable(callback_onEnable);
+    IN11.onDisable(callback_onDisable);
     IN11.onChange(callback_OnChange);
-
+    Timer t(1000);
 }
 void loop(){
     // process();
