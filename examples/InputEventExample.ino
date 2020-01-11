@@ -1,15 +1,25 @@
 #include "MteCore.h"
-void IN1Aktif(){
-    Serial.println("Oke");
+#include "TimerCore.h"
+void callback_onEnable(){
+    Serial.println("onEnable");
 }
-void In1NonAktif(){
-    Serial.println("Kaga Aktif");
+void callback_onDisable(){
+    Serial.println("onDisable");
+}
+void callback_OnChange(){
+    Serial.println("onChange");
 }
 void setup(){
     Serial.begin(9600);
-    IN1.onActive(IN1Aktif);
-    IN1.onRelease(In1NonAktif);
+    
+    IN11.onEnable(callback_onEnable);
+    IN11.onDisable(callback_onDisable);
+    IN11.onChange(callback_OnChange);
+    Timer t(1000);
 }
 void loop(){
-    process();
+    // process();
+    Serial.println(digitalRead(A6));
+    delay(1000);
+    
 }   
