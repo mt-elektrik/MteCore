@@ -1,6 +1,6 @@
 #ifdef _MTE_CORE_H
-    #ifndef _TIMER_EVENT_H 
-    #define _TIMER_EVENT_H 
+    #ifndef _TIMER_CORE_H 
+    #define _TIMER_CORE_H 
     #include "Arduino.h"
     typedef void(*Timer_cb)();
     class Timer
@@ -60,6 +60,7 @@
     }
     bool Timer::isStarted(){
         return _isStarted;
+        
     }
-    #endif //_TIMER_EVENT_H
+    #endif //_TIMER_CORE_H
 #endif //_MTE_CORE_H

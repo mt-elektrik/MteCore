@@ -25,6 +25,8 @@
 #include "Arduino.h"
 #include "src/InputCore.h"
 #include "src/OutputCore.h"
+#include "src/TimerCore.h"
+#include "src/CounterCore.h"
 static InputCore IN1(2);
 static InputCore IN2(3);
 static InputCore IN3(4);
@@ -47,7 +49,6 @@ static OutputCore OUT4(A0);
 static OutputCore OUT5(6);
 static OutputCore OUT6(7);
 static OutputCore OUT7(8);
-//TIMER
 
 void process(){
   unsigned long now = millis();

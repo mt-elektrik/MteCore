@@ -1,5 +1,4 @@
 #include "MteCore.h"
-#include "TimerCore.h"
 void callback_onEnable(){
     Serial.println("onEnable");
 }
@@ -15,7 +14,6 @@ void setup(){
     IN11.onEnable(callback_onEnable);
     IN11.onDisable(callback_onDisable);
     IN11.onChange(callback_OnChange);
-    Timer t(1000);
 }
 void loop(){
     // process();

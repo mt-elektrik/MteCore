@@ -2,10 +2,7 @@
 #ifndef _OUTPUT_CORE_H 
 #define _OUTPUT_CORE_H 
 #include "Arduino.h"
-
-
 typedef void(*OutputCore_State_Callback)();
-
 class OutputCore {
     protected:
     private:

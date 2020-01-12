@@ -26,7 +26,7 @@ class InputCore {
         void onEnable(inputCore_State_Callback cb);
         void onDisable(inputCore_State_Callback cb);
         void onChange(inputCore_State_Callback cb);
-        bool onEnable();
+        bool isEnable();
         void process(unsigned long now);
 };
 InputCore::InputCore(uint8_t pinIn) {
@@ -45,7 +45,7 @@ void InputCore::onDisable(inputCore_State_Callback cb ){
 void InputCore::onChange(inputCore_State_Callback cb){
     _cbc=cb;
 }
-bool InputCore::onEnable(){
+bool InputCore::isEnable(){
     return !digitalRead(_pinIn);
 }
 void InputCore::process(unsigned long now){
