@@ -13,7 +13,7 @@
         bool _isStarted = false;
         unsigned long _timestamp;
     public:
-        Timer(unsigned long interval);
+        Timer(unsigned long interval=-1);
         ~Timer();
         void start();
         void stop();
@@ -22,9 +22,10 @@
         void onStoped(Timer_cb cb);
         void process(unsigned long now);
         bool isStarted();
+        void setInterval(unsigned long interval);
     };
     
-    Timer::Timer(unsigned long interval)
+    Timer::Timer(unsigned long interval=-1)
     {
         _interval = interval;
     }
@@ -61,6 +62,9 @@
     bool Timer::isStarted(){
         return _isStarted;
         
+    }
+    void Timer::setInterval(unsigned long interval){
+        _interval = interval;
     }
     #endif //_TIMER_CORE_H
 #endif //_MTE_CORE_H

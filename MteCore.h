@@ -30,34 +30,34 @@
 #ifdef _ENABLE_F3_ANALOG || _ENABLE_F4_ANALOG || _ENABLE_F5_ANALOG || _ENABLE_F7_ANALOG
   #include "src/AnalogCore.h"
 #endif
-static InputCore IN1(2);
-static InputCore IN2(3);
-static InputCore IN3(4);
-static InputCore IN4(5);
-static InputCore IN5(11);
-static InputCore IN6(12);
-static InputCore IN7(13);
-static InputCore IN8(10);
+      InputCore IN1(2);
+      InputCore IN2(3);
+      InputCore IN3(4);
+      InputCore IN4(5);
+      InputCore IN5(11);
+      InputCore IN6(12);
+      InputCore IN7(13);
+      InputCore IN8(10);
 //Settings IN9
 #ifdef _ENABLE_F7_ANALOG
-  static AnalogCore F7(A7); //enable F7 as Analog
+        AnalogCore F7(A7); //enable F7 as Analog
 #else 
-  static InputCore IN9(A7);
+        InputCore IN9(A7);
 #endif
 //end Settings
-static InputCore IN10(9);
+      InputCore IN10(9);
 
 //Settings IN11
 #ifdef _ENABLE_F5_ANALOG
-  static AnalogCore F5(A6); //enable F5 as Analog
+        AnalogCore F5(A6); //enable F5 as Analog
 #else
-  static InputCore IN11(A6);
+        InputCore IN11(A6);
 #endif
 //end Settings
 
 //Settings IN12
 #ifdef _ENABLE_F3_ANALOG
-  static AnalogCore F3(A4); //enable F3 as Analog
+        AnalogCore F3(A4); //enable F3 as Analog
 #elif defined _ENABLE_F3_I2C
   #ifndef _ENABLE_F4_I2C
     #error "Cannot enable F3 when F4 as I2C is disable!"
@@ -65,12 +65,12 @@ static InputCore IN10(9);
     //enable i2c F3
   #endif
 #else
-  static InputCore IN12(A4); //enable IN12
+        InputCore IN12(A4); //enable IN12
 #endif
 //end Settings IN12
 
 #ifdef _ENABLE_F4_ANALOG
-  static AnalogCore F4(A5); //enable F4 as Analog
+        AnalogCore F4(A5); //enable F4 as Analog
 #elif defined _ENABLE_F4_I2C
   #ifndef _ENABLE_F3_I2C
     #error "Cannot enable F4 when F3 as I2C is disable!"
@@ -79,13 +79,13 @@ static InputCore IN10(9);
   #endif
 #endif
 //OUTPUT
-static OutputCore OUT1(A3);
-static OutputCore OUT2(A2);
-static OutputCore OUT3(A1);
-static OutputCore OUT4(A0);
-static OutputCore OUT5(6);
-static OutputCore OUT6(7);
-static OutputCore OUT7(8);
+      OutputCore OUT1(A3);
+      OutputCore OUT2(A2);
+      OutputCore OUT3(A1);
+      OutputCore OUT4(A0);
+      OutputCore OUT5(6);
+      OutputCore OUT6(7);
+      OutputCore OUT7(8);
 
 void process(){
   unsigned long now = millis();
@@ -97,21 +97,25 @@ void process(){
   IN6.process(now);
   IN7.process(now);
   IN8.process(now);
-  #ifdef IN9
+  #ifndef _ENABLE_F7_ANALOG
     IN9.process(now);
   #else
     F7.process(now); //F7 analog process
   #endif
+
   IN10.process(now);
-  #ifdef IN11
+
+  #ifndef _ENABLE_F5_ANALOG
     IN11.process(now);
   #else
     F5.process(now); //F5 analog process
   #endif
+
   #ifdef _ENABLE_F4_ANALOG
     F4.process(now); //F4 analog process
   #endif
-  #ifdef IN12
+
+  #ifndef _ENABLE_F3_ANALOG
     IN12.process(now);
   #else
     F3.process(now); //F3 Analog process
