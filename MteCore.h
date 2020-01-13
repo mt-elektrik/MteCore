@@ -27,6 +27,9 @@
 #include "src/OutputCore.h"
 #include "src/TimerCore.h"
 #include "src/CounterCore.h"
+#ifdef _ENABLE_F3_ANALOG || _ENABLE_F4_ANALOG || _ENABLE_F5_ANALOG || _ENABLE_F7_ANALOG
+  #include "src/AnalogCore.h"
+#endif
 static InputCore IN1(2);
 static InputCore IN2(3);
 static InputCore IN3(4);
@@ -34,13 +37,47 @@ static InputCore IN4(5);
 static InputCore IN5(11);
 static InputCore IN6(12);
 static InputCore IN7(13);
-// #ifndef _MTE_FCORE_H
 static InputCore IN8(10);
-static InputCore IN9(A7);
+//Settings IN9
+#ifdef _ENABLE_F7_ANALOG
+  static AnalogCore F7(A7); //enable F7 as Analog
+#else 
+  static InputCore IN9(A7);
+#endif
+//end Settings
 static InputCore IN10(9);
-static InputCore IN11(A6);
-static InputCore IN12(A4);
-// #endif //_MTE_FCORE_H
+
+//Settings IN11
+#ifdef _ENABLE_F5_ANALOG
+  static AnalogCore F5(A6); //enable F5 as Analog
+#else
+  static InputCore IN11(A6);
+#endif
+//end Settings
+
+//Settings IN12
+#ifdef _ENABLE_F3_ANALOG
+  static AnalogCore F3(A4); //enable F3 as Analog
+#elif defined _ENABLE_F3_I2C
+  #ifndef _ENABLE_F4_I2C
+    #error "Cannot enable F3 when F4 as I2C is disable!"
+  #else
+    //enable i2c F3
+  #endif
+#else
+  static InputCore IN12(A4); //enable IN12
+#endif
+//end Settings IN12
+
+#ifdef _ENABLE_F4_ANALOG
+  static AnalogCore F4(A5); //enable F4 as Analog
+#elif defined _ENABLE_F4_I2C
+  #ifndef _ENABLE_F3_I2C
+    #error "Cannot enable F4 when F3 as I2C is disable!"
+  #else
+    //enable i2c F4
+  #endif
+#endif
 //OUTPUT
 static OutputCore OUT1(A3);
 static OutputCore OUT2(A2);
@@ -60,11 +97,25 @@ void process(){
   IN6.process(now);
   IN7.process(now);
   IN8.process(now);
-  IN9.process(now);
+  #ifdef IN9
+    IN9.process(now);
+  #else
+    F7.process(now); //F7 analog process
+  #endif
   IN10.process(now);
-  IN11.process(now);
-  IN12.process(now);
-
+  #ifdef IN11
+    IN11.process(now);
+  #else
+    F5.process(now); //F5 analog process
+  #endif
+  #ifdef _ENABLE_F4_ANALOG
+    F4.process(now); //F4 analog process
+  #endif
+  #ifdef IN12
+    IN12.process(now);
+  #else
+    F3.process(now); //F3 Analog process
+  #endif
   OUT1.process(now);
   OUT2.process(now);
   OUT3.process(now);

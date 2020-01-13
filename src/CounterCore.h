@@ -1,4 +1,4 @@
-// #ifdef _MTE_CORE_H
+#ifdef _MTE_CORE_H
     #ifndef _COUNTER_CORE_H 
     #define _COUNTER_CORE_H 
     #include "Arduino.h"
@@ -68,4 +68,4 @@
         _cb_onTriggered = cb;
     }
     #endif // _COUNTER_CORE_H
-// #endif _MTE_CORE_H
+#endif _MTE_CORE_H
