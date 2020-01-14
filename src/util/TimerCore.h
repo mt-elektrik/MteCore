@@ -65,6 +65,7 @@
     }
     void Timer::setInterval(unsigned long interval){
         _interval = interval;
+        _timestamp=millis();
     }
     #endif //_TIMER_CORE_H
 #endif //_MTE_CORE_H

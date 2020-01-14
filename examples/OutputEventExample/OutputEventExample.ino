@@ -20,8 +20,9 @@ void setup(){
     t.onTimeout(pulseOUT1);
 }
 void loop(){
-    unsigned long now = millis();
+    //process main input & output
     process();
+    unsigned long now = millis();
     t.process(now);
 }
 void enableOUT1(){

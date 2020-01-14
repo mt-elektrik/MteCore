@@ -23,12 +23,12 @@
 #ifndef _MTE_CORE_H
 #define _MTE_CORE_H
 #include "Arduino.h"
-#include "src/InputCore.h"
-#include "src/OutputCore.h"
-#include "src/TimerCore.h"
-#include "src/CounterCore.h"
+#include "util/InputCore.h"
+#include "util/OutputCore.h"
+#include "util/TimerCore.h"
+#include "util/CounterCore.h"
 #ifdef _ENABLE_F3_ANALOG || _ENABLE_F4_ANALOG || _ENABLE_F5_ANALOG || _ENABLE_F7_ANALOG
-  #include "src/AnalogCore.h"
+  #include "util/AnalogCore.h"
 #endif
       InputCore IN1(2);
       InputCore IN2(3);
