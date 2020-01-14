@@ -1,6 +1,6 @@
 #ifdef _MTE_CORE_H
-    #ifndef _TIMER_EVENT_H 
-    #define _TIMER_EVENT_H 
+    #ifndef _TIMER_CORE_H 
+    #define _TIMER_CORE_H 
     #include "Arduino.h"
     typedef void(*Timer_cb)();
     class Timer
@@ -13,7 +13,7 @@
         bool _isStarted = false;
         unsigned long _timestamp;
     public:
-        Timer(unsigned long interval);
+        Timer(unsigned long interval=-1);
         ~Timer();
         void start();
         void stop();
@@ -22,9 +22,10 @@
         void onStoped(Timer_cb cb);
         void process(unsigned long now);
         bool isStarted();
+        void setInterval(unsigned long interval);
     };
     
-    Timer::Timer(unsigned long interval)
+    Timer::Timer(unsigned long interval=-1)
     {
         _interval = interval;
     }
@@ -60,6 +61,10 @@
     }
     bool Timer::isStarted(){
         return _isStarted;
+        
     }
-    #endif //_TIMER_EVENT_H
+    void Timer::setInterval(unsigned long interval){
+        _interval = interval;
+    }
+    #endif //_TIMER_CORE_H
 #endif //_MTE_CORE_H

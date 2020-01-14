@@ -2,10 +2,7 @@
 #ifndef _OUTPUT_CORE_H 
 #define _OUTPUT_CORE_H 
 #include "Arduino.h"
-
-
 typedef void(*OutputCore_State_Callback)();
-
 class OutputCore {
     protected:
     private:
@@ -33,6 +30,7 @@ class OutputCore {
 OutputCore::OutputCore(uint8_t pinIn) {
     _pinIn=pinIn;
     pinMode(pinIn,OUTPUT);
+    digitalWrite(pinIn,HIGH);
 }
 
 OutputCore::~OutputCore() {}
@@ -91,12 +89,12 @@ void OutputCore::process(unsigned long now){
   }
 }
 bool OutputCore::enable(){
-    digitalWrite(_pinIn,HIGH);
-    return digitalRead(_pinIn)==HIGH;
-}
-bool OutputCore::disable(){
     digitalWrite(_pinIn,LOW);
     return digitalRead(_pinIn)==LOW;
+}
+bool OutputCore::disable(){
+    digitalWrite(_pinIn,HIGH);
+    return digitalRead(_pinIn)==HIGH;
 }
 #endif //_OUTPUT_CORE_H
 #endif //_MTE_CORE_H

@@ -5,7 +5,9 @@
             "includePath": [
                 "/home/saepul/Documents/arduino-1.8.10/tools/**",
                 "/home/saepul/Documents/arduino-1.8.10/hardware/arduino/avr/**",
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/home/saepul/.arduino15/packages/arduino/hardware/avr/1.8.2/**",
+                "/home/saepul/.arduino15/packages/arduino/tools/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
@@ -13,7 +15,8 @@
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",
             "forcedInclude": [
-                "/home/saepul/Documents/arduino-1.8.10/hardware/arduino/avr/cores/arduino/Arduino.h"
+                "/home/saepul/Documents/arduino-1.8.10/hardware/arduino/avr/cores/arduino/Arduino.h",
+                "/home/saepul/.arduino15/packages/arduino/hardware/avr/1.8.2/cores/arduino/Arduino.h"
             ]
         }
     ],

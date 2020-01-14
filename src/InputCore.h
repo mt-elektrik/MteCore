@@ -12,7 +12,7 @@ class InputCore {
         bool firstState;
         InputCore(const InputCore&);
         InputCore& operator=(const InputCore&);
-        const uint8_t debounceDelay = 20;
+        uint8_t debounceDelay = 20;
         unsigned long lastDebounceTime;
         bool lastState=HIGH;
         bool lastStateOnChange=HIGH;
@@ -26,12 +26,12 @@ class InputCore {
         void onEnable(inputCore_State_Callback cb);
         void onDisable(inputCore_State_Callback cb);
         void onChange(inputCore_State_Callback cb);
-        bool onEnable();
+        bool isEnable();
         void process(unsigned long now);
 };
 InputCore::InputCore(uint8_t pinIn) {
     _pinIn=pinIn;
-    pinMode(pinIn,INPUT_PULLUP);
+        pinMode(pinIn,INPUT_PULLUP);
 }
 
 InputCore::~InputCore() {}
@@ -45,11 +45,22 @@ void InputCore::onDisable(inputCore_State_Callback cb ){
 void InputCore::onChange(inputCore_State_Callback cb){
     _cbc=cb;
 }
-bool InputCore::onEnable(){
-    return !digitalRead(_pinIn);
+bool InputCore::isEnable(){
+    if(_pinIn == A6 || _pinIn == A7){
+         return analogRead(_pinIn)>900 ? 1:0;
+    }else{
+         return !digitalRead(_pinIn);
+    }
+    
 }
 void InputCore::process(unsigned long now){
-  int reading = digitalRead(_pinIn);
+    int reading=0;
+    if(_pinIn == A6 || _pinIn == A7){
+         reading = analogRead(_pinIn)>900 ? 1:0;
+    }else{
+         reading = digitalRead(_pinIn);
+    }
+  
   if (now - lastDebounceTime > debounceDelay) {
         if(reading!=lastState){
             firstState=true;
