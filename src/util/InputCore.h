@@ -31,11 +31,15 @@ class InputCore {
 };
 InputCore::InputCore(uint8_t pinIn) {
     _pinIn=pinIn;
+<<<<<<< HEAD
     if(_pinIn == A6 || _pinIn == A7){
         pinMode(pinIn,INPUT);
     }else{
         pinMode(pinIn,INPUT_PULLUP);
     }
+=======
+        pinMode(pinIn,INPUT_PULLUP);
+>>>>>>> f6c0ae5e7d937a9a6df150021e900a1aee2b54ec
 }
 
 InputCore::~InputCore() {}
@@ -51,7 +55,11 @@ void InputCore::onChange(inputCore_State_Callback cb){
 }
 bool InputCore::isEnable(){
     if(_pinIn == A6 || _pinIn == A7){
+<<<<<<< HEAD
          return analogRead(_pinIn)>900 ? 0:1;
+=======
+         return analogRead(_pinIn)>900 ? 1:0;
+>>>>>>> f6c0ae5e7d937a9a6df150021e900a1aee2b54ec
     }else{
          return !digitalRead(_pinIn);
     }
