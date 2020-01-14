@@ -31,7 +31,11 @@ class InputCore {
 };
 InputCore::InputCore(uint8_t pinIn) {
     _pinIn=pinIn;
+    if(_pinIn == A6 || _pinIn == A7){
+        pinMode(pinIn,INPUT);
+    }else{
         pinMode(pinIn,INPUT_PULLUP);
+    }
 }
 
 InputCore::~InputCore() {}
@@ -47,7 +51,7 @@ void InputCore::onChange(inputCore_State_Callback cb){
 }
 bool InputCore::isEnable(){
     if(_pinIn == A6 || _pinIn == A7){
-         return analogRead(_pinIn)>900 ? 1:0;
+         return analogRead(_pinIn)>900 ? 0:1;
     }else{
          return !digitalRead(_pinIn);
     }

@@ -1,11 +1,11 @@
-
+/*
+    14/01/2020 Muara Teknik Elektrik
+    Input Event Example for board MTE-miniController V.2.0
+    jumper PIN SELECTOR to ALL IN(8,9,10,11,12)
+*/
 #include "MteCore.h"
-<<<<<<< HEAD
-void setup2(){
-=======
 void setup(){
     Serial.begin(9600);
->>>>>>> ccf1a55a372853037f7e609f25d28fda75241876
     //Setup callback IN1
     IN1.onEnable(callback_IN1_onEnable);
     IN1.onDisable(callback_IN1_onDisable);
@@ -57,11 +57,7 @@ void setup(){
     
    
 }
-<<<<<<< HEAD
-void loop2(){
-=======
 void loop(){
->>>>>>> ccf1a55a372853037f7e609f25d28fda75241876
     process();
 }   
 //-------------------------------------------------------------------
