@@ -6,11 +6,10 @@
 #include "MteCore.h"
 Timer t(1000); //interval 1000 ms = 1 sec
 void setup(){
-    // t.setInterval(1000) //to set interval
-    Serial.begin(9600);
     IN1.onEnable(enableOUT1);
     IN2.onEnable(disableOUT1);
     IN3.onEnable(handleTimer);
+    // t.setInterval(1000) //to set interval
     t.onTimeout(pulseOUT1);
 }
 void loop(){
