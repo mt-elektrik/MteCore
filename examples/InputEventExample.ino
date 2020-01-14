@@ -1,6 +1,11 @@
 
 #include "MteCore.h"
+<<<<<<< HEAD
 void setup2(){
+=======
+void setup(){
+    Serial.begin(9600);
+>>>>>>> ccf1a55a372853037f7e609f25d28fda75241876
     //Setup callback IN1
     IN1.onEnable(callback_IN1_onEnable);
     IN1.onDisable(callback_IN1_onDisable);
@@ -52,7 +57,11 @@ void setup2(){
     
    
 }
+<<<<<<< HEAD
 void loop2(){
+=======
+void loop(){
+>>>>>>> ccf1a55a372853037f7e609f25d28fda75241876
     process();
 }   
 //-------------------------------------------------------------------
