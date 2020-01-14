@@ -1,7 +1,6 @@
 
 #include "MteCore.h"
-void setup(){
-    Serial.begin(9600);
+void setup2(){
     //Setup callback IN1
     IN1.onEnable(callback_IN1_onEnable);
     IN1.onDisable(callback_IN1_onDisable);
@@ -53,7 +52,7 @@ void setup(){
     
    
 }
-void loop(){
+void loop2(){
     process();
 }   
 //-------------------------------------------------------------------
