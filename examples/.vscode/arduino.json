@@ -1,0 +1,5 @@
+{
+    "sketch": "OutputEventExample.ino",
+    "board": "arduino:avr:pro",
+    "configuration": "cpu=16MHzatmega328"
+}
