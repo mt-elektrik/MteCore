@@ -23,6 +23,84 @@
 #ifndef _MTE_CORE_H
 #define _MTE_CORE_H
 #include "Arduino.h"
+// Define where debug output will be printed.
+#define DEBUG_PRINTER Serial
+// Setup debug printing macros.
+#ifdef MTECORE_DEBUG
+  //pin mapping for MTE-miniController V2.0
+  String PIN_TO_LABEL(uint8_t pin){
+    switch (pin)
+    {
+    case 2:
+      return "IN1";
+      break;
+    case 3:
+      return "IN2";
+      break;
+    case 4:
+      return "IN3";
+      break;
+    case 5:
+      return "IN4";
+      break;
+    case 11:
+      return "IN5";
+      break;
+    case 12:
+      return "IN6";
+      break;
+    case 13:
+      return "IN7";
+      break;
+    case 10:
+      return "IN8";
+      break;
+    case A7:
+      return "IN9";
+      break;
+    case 9:
+      return "IN10";
+      break;
+    case A6:
+      return "IN11";
+      break;
+    case A4:
+      return "IN12";
+      break;
+      //output
+    case A3:
+      return "OUT1";
+      break;
+    case A2:
+      return "OUT2";
+      break;
+    case A1:
+      return "OUT3";
+      break;
+    case A0:
+      return "OUT4";
+      break;
+    case 6:
+      return "OUT5";
+      break;
+    case 7:
+      return "OUT6";
+      break;
+    case 8:
+      return "OUT7";
+      break;
+    
+    default:
+      break;
+    }
+  }
+	#define DEBUG_PRINT(...) { DEBUG_PRINTER.print(__VA_ARGS__); }
+	#define DEBUG_PRINTLN(...) { DEBUG_PRINTER.println(__VA_ARGS__); }
+#else
+	#define DEBUG_PRINT(...) {}
+	#define DEBUG_PRINTLN(...) {}
+#endif
+
 #include "util/InputCore.h"
 #include "util/OutputCore.h"
 #include "util/TimerCore.h"

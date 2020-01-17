@@ -1,9 +1,10 @@
 /*
     14/01/2020 Muara Teknik Elektrik
-    Input Event Example for board MTE-miniController V.2.0
-    jumper PIN SELECTOR to ALL IN(8,9,10,11,12)
+    Input Event Example
 */
+// #define MTECORE_DEBUG //uncomment this line for debug
 #include "MteCore.h"
+
 void setup(){
     Serial.begin(9600);
     //Setup callback IN1
@@ -33,29 +34,7 @@ void setup(){
     //Setup callback IN7
     IN7.onEnable(callback_IN7_onEnable);
     IN7.onDisable(callback_IN7_onDisable);
-    IN7.onChange(callback_IN7_OnChange);
-    //Setup callback IN8
-    IN8.onEnable(callback_IN8_onEnable);
-    IN8.onDisable(callback_IN8_onDisable);
-    IN8.onChange(callback_IN8_OnChange);
-    //Setup callback IN9
-    IN9.onEnable(callback_IN9_onEnable);
-    IN9.onDisable(callback_IN9_onDisable);
-    IN9.onChange(callback_IN9_OnChange);
-    //Setup callback IN10
-    IN10.onEnable(callback_IN10_onEnable);
-    IN10.onDisable(callback_IN10_onDisable);
-    IN10.onChange(callback_IN10_OnChange);
-    //Setup callback IN11
-    IN11.onEnable(callback_IN11_onEnable);
-    IN11.onDisable(callback_IN11_onDisable);
-    IN11.onChange(callback_IN11_OnChange);
-    //Setup callback IN12
-    IN12.onEnable(callback_IN12_onEnable);
-    IN12.onDisable(callback_IN12_onDisable);
-    IN12.onChange(callback_IN12_OnChange);
-    
-   
+    IN7.onChange(callback_IN7_OnChange); 
 }
 void loop(){
     //process main input & output
@@ -131,54 +110,4 @@ void callback_IN7_onDisable(){
 }
 void callback_IN7_OnChange(){
     Serial.println("IN7 => onChange");
-}
-//callback IN8
-void callback_IN8_onEnable(){
-    Serial.println("IN8 => onEnable");
-}
-void callback_IN8_onDisable(){
-    Serial.println("IN8 => onDisable");
-}
-void callback_IN8_OnChange(){
-    Serial.println("IN8 => onChange");
-}
-//callback IN9
-void callback_IN9_onEnable(){
-    Serial.println("IN9 => onEnable");
-}
-void callback_IN9_onDisable(){
-    Serial.println("IN9 => onDisable");
-}
-void callback_IN9_OnChange(){
-    Serial.println("IN9 => onChange");
-}
-//callback IN10
-void callback_IN10_onEnable(){
-    Serial.println("IN10 => onEnable");
-}
-void callback_IN10_onDisable(){
-    Serial.println("IN10 => onDisable");
-}
-void callback_IN10_OnChange(){
-    Serial.println("IN10 => onChange");
-}
-//callback IN11
-void callback_IN11_onEnable(){
-    Serial.println("IN11 => onEnable");
-}
-void callback_IN11_onDisable(){
-    Serial.println("IN11 => onDisable");
-}
-void callback_IN11_OnChange(){
-    Serial.println("IN11 => onChange");
-}
-//callback IN12
-void callback_IN12_onEnable(){
-    Serial.println("IN12 => onEnable");
-}
-void callback_IN12_onDisable(){
-    Serial.println("IN12 => onDisable");
-}
-void callback_IN12_OnChange(){
-    Serial.println("IN12 => onChange");
 }

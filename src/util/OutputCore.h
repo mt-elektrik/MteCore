@@ -11,7 +11,7 @@ class OutputCore {
         OutputCore& operator=(const OutputCore&);
         const uint8_t debounceDelay = 20;
         unsigned long lastDebounceTime;
-        bool lastState=LOW;
+        bool lastState=HIGH;
         uint8_t _pinIn;
         OutputCore_State_Callback _cba;
         OutputCore_State_Callback _cbna;
@@ -48,45 +48,44 @@ bool OutputCore::isEnable(){
     return !digitalRead(_pinIn);
 }
 void OutputCore::process(unsigned long now){
-  int reading = digitalRead(_pinIn);
-  if (now - lastDebounceTime > debounceDelay) {
-        if(reading!=lastState){
-            firstState=true;
-                /* onChange */
-                if(_cbc){
-                    _cbc();
-                }
-                /* ------- */
-            if(reading==LOW){
-                /* onEnable */
-                if(_cba){
-                    _cba();
-                }
-                /* ------- */
-            }else{
-                /* onDisable */
-                if(_cbna){
-                    _cbna();
-                }
-                /* --------- */
+    int reading = digitalRead(_pinIn);
+    if(!firstState){
+        firstState=true;
+        if(reading==LOW){
+            if(_cba){
+                _cba();
             }
         }else{
-            if(!firstState){
-                firstState=true;
+            if(_cbna){
+                _cbna();
+            }
+        }
+    }else{
+        if (now - lastDebounceTime > debounceDelay) {
+            if(reading!=lastState){
+                    /* onChange */
+                    if(_cbc){
+                        _cbc();
+                    }
+                    /* ------- */
                 if(reading==LOW){
+                    /* onEnable */
                     if(_cba){
                         _cba();
                     }
+                    /* ------- */
                 }else{
+                    /* onDisable */
                     if(_cbna){
                         _cbna();
                     }
+                    /* --------- */
                 }
             }
+        lastState = reading;
+        lastDebounceTime = now;  
         }
-    lastState = reading;
-    lastDebounceTime = now;  
-  }
+    }
 }
 bool OutputCore::enable(){
     digitalWrite(_pinIn,LOW);
