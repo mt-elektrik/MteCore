@@ -23,11 +23,8 @@
 #ifndef _MTE_CORE_H
 #define _MTE_CORE_H
 #include "Arduino.h"
-// Define where debug output will be printed.
-#define DEBUG_PRINTER Serial
-// Setup debug printing macros.
-#ifdef MTECORE_DEBUG
-  //pin mapping for MTE-miniController V2.0
+#if defined(INPUT_DEBUG) ||  defined(OUTPUT_DEBUG)
+  //pin mapping for MTE-miniController V.2.0
   String PIN_TO_LABEL(uint8_t pin){
     switch (pin)
     {
@@ -94,62 +91,92 @@
       break;
     }
   }
-	#define DEBUG_PRINT(...) { DEBUG_PRINTER.print(__VA_ARGS__); }
-	#define DEBUG_PRINTLN(...) { DEBUG_PRINTER.println(__VA_ARGS__); }
-#else
-	#define DEBUG_PRINT(...) {}
-	#define DEBUG_PRINTLN(...) {}
 #endif
 
 #include "util/InputCore.h"
 #include "util/OutputCore.h"
 #include "util/TimerCore.h"
 #include "util/CounterCore.h"
-#ifdef _ENABLE_F3_ANALOG || _ENABLE_F4_ANALOG || _ENABLE_F5_ANALOG || _ENABLE_F7_ANALOG
+#if defined(_ENABLE_F3_ANALOG) || defined(_ENABLE_F4_ANALOG) || defined(_ENABLE_F5_ANALOG) || defined(_ENABLE_F7_ANALOG)
   #include "util/AnalogCore.h"
 #endif
-      InputCore IN1(2);
-      InputCore IN2(3);
-      InputCore IN3(4);
-      InputCore IN4(5);
-      InputCore IN5(11);
-      InputCore IN6(12);
-      InputCore IN7(13);
-      InputCore IN8(10);
-//Settings IN9
-#ifdef _ENABLE_F7_ANALOG
-        AnalogCore F7(A7); //enable F7 as Analog
-#else 
-        InputCore IN9(A7);
+#ifndef _DISABLE_IN1
+  InputCore IN1(2);
+#endif
+#ifndef _DISABLE_IN2
+  InputCore IN2(3);
+#endif
+#ifndef _DISABLE_IN3
+  InputCore IN3(4);
+#endif
+#ifndef _DISABLE_IN4
+  InputCore IN4(5);
+#endif
+#ifndef _DISABLE_IN5
+  InputCore IN5(11);
+#endif
+#ifndef _DISABLE_IN6
+  InputCore IN6(12);
+#endif
+#ifndef _DISABLE_IN7
+  InputCore IN7(13);
+#endif
+//Settings IN8
+#ifdef _ENABLE_F8_PWM
+#elif defined(_ENABLE_F8_UART)
+#else
+  #ifndef _DISABLE_IN8
+    InputCore IN8(10);
+  #endif
 #endif
 //end Settings
-      InputCore IN10(9);
-
+//Settings IN9
+#ifdef _ENABLE_F7_ANALOG
+  AnalogCore F7(A7); //enable F7 as Analog
+#else 
+  #ifndef _DISABLE_IN9
+    InputCore IN9(A7);
+  #endif
+#endif
+//end Settings
+//Settings IN10
+#ifdef _ENABLE_F6_PWM
+#elif defined(_ENABLE_F6_UART)
+#else
+  #ifndef _DISABLE_IN10
+    InputCore IN10(9);
+  #endif
+#endif
+//end Settings
 //Settings IN11
 #ifdef _ENABLE_F5_ANALOG
-        AnalogCore F5(A6); //enable F5 as Analog
+  AnalogCore F5(A6); //enable F5 as Analog
 #else
-        InputCore IN11(A6);
+  #ifndef _DISABLE_IN11
+    InputCore IN11(A6);
+  #endif
 #endif
 //end Settings
 
 //Settings IN12
 #ifdef _ENABLE_F3_ANALOG
         AnalogCore F3(A4); //enable F3 as Analog
-#elif defined _ENABLE_F3_I2C
+#elif defined(_ENABLE_F3_I2C)
   #ifndef _ENABLE_F4_I2C
     #error "Cannot enable F3 when F4 as I2C is disable!"
   #else
     //enable i2c F3
   #endif
 #else
-        InputCore IN12(A4); //enable IN12
+  #ifndef _DISABLE_IN12
+    InputCore IN12(A4); //enable IN12
+  #endif
 #endif
 //end Settings IN12
 
 #ifdef _ENABLE_F4_ANALOG
-        AnalogCore F4(A5); //enable F4 as Analog
-#elif defined _ENABLE_F4_I2C
+    AnalogCore F4(A5); //enable F4 as Analog
+#elif defined(_ENABLE_F4_I2C)
   #ifndef _ENABLE_F3_I2C
     #error "Cannot enable F4 when F3 as I2C is disable!"
   #else
@@ -157,34 +184,68 @@
   #endif
 #endif
 //OUTPUT
-      OutputCore OUT1(A3);
-      OutputCore OUT2(A2);
-      OutputCore OUT3(A1);
-      OutputCore OUT4(A0);
-      OutputCore OUT5(6);
-      OutputCore OUT6(7);
-      OutputCore OUT7(8);
+#ifndef _DISABLE_OUT1
+  OutputCore OUT1(A3);
+#endif
+#ifndef _DISABLE_OUT2
+  OutputCore OUT2(A2);
+#endif
+#ifndef _DISABLE_OUT3
+  OutputCore OUT3(A1);
+#endif
+#ifndef _DISABLE_OUT4
+  OutputCore OUT4(A0);
+#endif
+#ifndef _DISABLE_OUT5
+  OutputCore OUT5(6);
+#endif
+#ifndef _DISABLE_OUT6
+  OutputCore OUT6(7);
+#endif
+#ifndef _DISABLE_OUT7
+  OutputCore OUT7(8);
+#endif
 
 void process(){
   unsigned long now = millis();
+#ifndef _DISABLE_IN1
   IN1.process(now);
+#endif
+#ifndef _DISABLE_IN2
   IN2.process(now);
+#endif
+#ifndef _DISABLE_IN3
   IN3.process(now);
+#endif
+#ifndef _DISABLE_IN4
   IN4.process(now);
+#endif
+#ifndef _DISABLE_IN5
   IN5.process(now);
+#endif
+#ifndef _DISABLE_IN6
   IN6.process(now);
+#endif
+#ifndef _DISABLE_IN7
   IN7.process(now);
+#endif
+#ifndef _DISABLE_IN8
   IN8.process(now);
+#endif
   #ifndef _ENABLE_F7_ANALOG
-    IN9.process(now);
+    #ifndef _DISABLE_IN9
+      IN9.process(now);
+    #endif
   #else
     F7.process(now); //F7 analog process
   #endif
-
+#ifndef _DISABLE_IN10
   IN10.process(now);
-
+#endif
   #ifndef _ENABLE_F5_ANALOG
-    IN11.process(now);
+    #ifndef _DISABLE_IN11
+      IN11.process(now);
+    #endif
   #else
     F5.process(now); //F5 analog process
   #endif
@@ -194,16 +255,33 @@ void process(){
   #endif
 
   #ifndef _ENABLE_F3_ANALOG
-    IN12.process(now);
+    #ifndef _DISABLE_IN10
+      IN12.process(now);
+    #endif
   #else
     F3.process(now); //F3 Analog process
   #endif
-  OUT1.process(now);
-  OUT2.process(now);
-  OUT3.process(now);
-  OUT4.process(now);
-  OUT5.process(now);
-  OUT6.process(now);
-  OUT7.process(now);
+  //-----------OUTPUT process
+  #ifndef _DISABLE_OUT1
+    OUT1.process(now);
+  #endif
+  #ifndef _DISABLE_OUT2
+    OUT2.process(now);
+  #endif
+  #ifndef _DISABLE_OUT3
+    OUT3.process(now);
+  #endif
+  #ifndef _DISABLE_OUT4
+    OUT4.process(now);
+  #endif
+  #ifndef _DISABLE_OUT5
+    OUT5.process(now);
+  #endif
+  #ifndef _DISABLE_OUT6
+    OUT6.process(now);
+  #endif
+  #ifndef _DISABLE_OUT7
+    OUT7.process(now);
+  #endif
 }
 #endif

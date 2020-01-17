@@ -36,35 +36,81 @@
     {
     }
     unsigned long Counter::getCounterValue(){
+        #ifdef _COUNTER_DEBUG
+        Serial.prinln("Counter : Hit getCounterValue");
+        #endif
         return _counterValue;
     }
     void Counter::setValueMax(unsigned long value){
+        #ifdef _COUNTER_DEBUG
+        Serial.print("Counter : setValueMax to ");
+        Serial.prinln(value);
+        #endif
         _valueMax = value;
     }
     void Counter::setIncreaseValue(int value=1){
+        #ifdef _COUNTER_DEBUG
+        Serial.print("Counter : setIncreaseValue to ");
+        Serial.prinln(value);
+        #endif
         _increaseValue = value;
     }
     void Counter::reset(){
+        #ifdef _COUNTER_DEBUG
+        Serial.prinln("Counter : Hit reset");
+        #endif
         _counterValue=0;
-        if(_cb_onChange)_cb_onChange();
-        if(_cb_onReset)_cb_onReset();
+        if(_cb_onChange){
+            #ifdef _COUNTER_DEBUG
+            Serial.prinln("Counter : Hit Callback onChange");
+            #endif
+            _cb_onChange();
+        }
+        if(_cb_onReset){
+            #ifdef _COUNTER_DEBUG
+            Serial.prinln("Counter : Hit Callback onReset");
+            #endif
+            _cb_onReset();
+        }
     }
     void Counter::trigger(){
+        #ifdef _COUNTER_DEBUG
+        Serial.prinln("Counter : Hit trigger");
+        #endif
         _counterValue = _counterValue + _increaseValue;
-        if(_cb_onTriggered)_cb_onTriggered();
+        if(_cb_onTriggered){
+            #ifdef _COUNTER_DEBUG
+            Serial.prinln("Counter : Hit Callback onTriggered");
+            #endif
+            _cb_onTriggered();
+        }
         if(_counterValue >= _valueMax){
             reset();
         }else{
-            if(_cb_onChange)_cb_onChange();
+            if(_cb_onChange){
+            #ifdef _COUNTER_DEBUG
+            Serial.prinln("Counter : Hit Callback onChange");
+            #endif
+            _cb_onChange();
+            }
         }
     }
     void Counter::onChange(counter_core_callback cb){
+        #ifdef _COUNTER_DEBUG
+        Serial.prinln("Counter : Hit Set Callback onChange");
+        #endif
         _cb_onChange = cb;
     }
     void Counter::onReset(counter_core_callback cb){
+        #ifdef _COUNTER_DEBUG
+        Serial.prinln("Counter : Hit Set Callback onReset");
+        #endif
         _cb_onReset = cb;
     }
     void Counter::onTriggered(counter_core_callback cb){
+        #ifdef _COUNTER_DEBUG
+        Serial.prinln("Counter : Hit Set Callback onTriggered");
+        #endif
         _cb_onTriggered = cb;
     }
     #endif // _COUNTER_CORE_H

@@ -2,7 +2,7 @@
     14/01/2020 Muara Teknik Elektrik
     Input Event Example
 */
-// #define MTECORE_DEBUG //uncomment this line for debug
+#define INPUT_DEBUG //uncomment this line for debug
 #include "MteCore.h"
 
 void setup(){

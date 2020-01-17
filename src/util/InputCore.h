@@ -34,9 +34,7 @@ class InputCore {
 };
 InputCore::InputCore(uint8_t pinIn)
  {
-    //  DEBUG_PRINTLN(" : begin use pin " + pinIn);
     _pinIn=pinIn;
-    
     if(_pinIn == A6 || _pinIn == A7){
         pinMode(pinIn,INPUT);
         lastStateOnChange= analogRead(_pinIn)>1000 ? 0:1;
@@ -50,23 +48,31 @@ InputCore::InputCore(uint8_t pinIn)
 InputCore::~InputCore() {}
 
 void InputCore::onEnable(inputCore_State_Callback cb) {
-    DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-    DEBUG_PRINTLN(" : Set Callback onEnable");
+    #ifdef _INPUT_DEBUG
+        Serial.print(PIN_TO_LABEL(_pinIn));
+        Serial.println(" : Set Callback onEnable");
+    #endif
     _cba=cb;
 }
 void InputCore::onDisable(inputCore_State_Callback cb ){
-    DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-    DEBUG_PRINTLN(" : Set Callback onDisable");
+    #ifdef _INPUT_DEBUG
+        Serial.print(PIN_TO_LABEL(_pinIn));
+        Serial.println(" : Set Callback onDisable");
+    #endif
     _cbna=cb;
 }
 void InputCore::onChange(inputCore_State_Callback cb){
-    DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-    DEBUG_PRINTLN(" : Set Callback onChange");
+    #ifdef _INPUT_DEBUG
+        Serial.print(PIN_TO_LABEL(_pinIn));
+        Serial.println(" : Set Callback onChange");
+    #endif
     _cbc=cb;
 }
 bool InputCore::isEnable(){
-    DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-    DEBUG_PRINTLN(" : Hit isEnable !"); 
+    #ifdef _INPUT_DEBUG
+        Serial.print(PIN_TO_LABEL(_pinIn));
+        Serial.println(" : Hit isEnable"); 
+    #endif
     if(_pinIn == A6 || _pinIn == A7){
          return analogRead(_pinIn)>1000 ? 0:1;
     }else{
@@ -82,14 +88,18 @@ void InputCore::process(unsigned long now){
     }
     if (now - lastDebounceTimeOnChange > 20) {
         if(reading!=lastStateOnChange){
-            DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-            DEBUG_PRINT(" : onChange TimeStamp =>"); 
-            DEBUG_PRINTLN(now);
+            #ifdef _INPUT_DEBUG
+            Serial.print(PIN_TO_LABEL(_pinIn));
+            Serial.print(" : onChange TimeStamp =>"); 
+            Serial.println(now);
+            #endif
         /* onChange */
         if(_cbc){
-            DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-            DEBUG_PRINT(" : Hit Callback onChange TimeStamp => "); 
-            DEBUG_PRINTLN(now +(now - lastDebounceTimeOnChange));
+            #ifdef _INPUT_DEBUG
+            Serial.print(PIN_TO_LABEL(_pinIn));
+            Serial.print(" : Hit Callback onChange TimeStamp => "); 
+            Serial.println(now +(now - lastDebounceTimeOnChange));
+            #endif
             _cbc();
         }
         /* ------- */
@@ -101,16 +111,20 @@ void InputCore::process(unsigned long now){
         firstState=true;
         if(reading==LOW){
             if(_cba){
-                DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-                DEBUG_PRINT(" : Hit First State Callback onEnable TimeStamp => ");
-                DEBUG_PRINTLN(now +(now - lastDebounceTime));
+                #ifdef _INPUT_DEBUG
+                Serial.print(PIN_TO_LABEL(_pinIn));
+                Serial.print(" : Hit First State Callback onEnable TimeStamp => ");
+                Serial.println(now +(now - lastDebounceTime));
+                #endif
                 _cba();
             }
         }else{
             if(_cbna){
-                DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-                DEBUG_PRINT(" : Hit First State Callback onDisable TimeStamp => ");
-                DEBUG_PRINTLN(now +(now - lastDebounceTime));
+                #ifdef _INPUT_DEBUG
+                Serial.print(PIN_TO_LABEL(_pinIn));
+                Serial.print(" : Hit First State Callback onDisable TimeStamp => ");
+                Serial.println(now +(now - lastDebounceTime));
+                #endif
                 _cbna();
             }
         }
@@ -120,18 +134,22 @@ void InputCore::process(unsigned long now){
                 if(reading==LOW){
                     /* onEnable */
                     if(_cba){
-                        DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-                        DEBUG_PRINT(" : Hit Callback onEnable TimeStamp => "); 
-                        DEBUG_PRINTLN(now +(now - lastDebounceTime));
+                        #ifdef _INPUT_DEBUG
+                        Serial.print(PIN_TO_LABEL(_pinIn));
+                        Serial.print(" : Hit Callback onEnable TimeStamp => "); 
+                        Serial.println(now +(now - lastDebounceTime));
+                        #endif
                         _cba();
                     }
                     /* ------- */
                 }else{
                     /* onDisable */
                     if(_cbna){
-                        DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-                        DEBUG_PRINT(" : Hit Callback onDisable TimeStamp => ");
-                        DEBUG_PRINTLN(now +(now - lastDebounceTime));
+                        #ifdef _INPUT_DEBUG
+                        Serial.print(PIN_TO_LABEL(_pinIn));
+                        Serial.print(" : Hit Callback onDisable TimeStamp => ");
+                        Serial.println(now +(now - lastDebounceTime));
+                        #endif
                         _cbna();
                     }
                     /* --------- */
@@ -143,10 +161,12 @@ void InputCore::process(unsigned long now){
     }
 }
 void InputCore::setDebounceDelay(uint32_t delayms){
-    DEBUG_PRINT(PIN_TO_LABEL(_pinIn));
-    DEBUG_PRINT(" : setDebounceDelay to ");
-    DEBUG_PRINT(delayms);
-    DEBUG_PRINTLN("ms.");
+    #ifdef _INPUT_DEBUG
+    Serial.print(PIN_TO_LABEL(_pinIn));
+    Serial.print(" : setDebounceDelay to ");
+    Serial.print(delayms);
+    Serial.println("ms.");
+    #endif
     debounceDelay = delayms;
 }
 

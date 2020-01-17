@@ -36,15 +36,31 @@ OutputCore::OutputCore(uint8_t pinIn) {
 OutputCore::~OutputCore() {}
 
 void OutputCore::onEnable(OutputCore_State_Callback cb) {
+    #ifdef _OUTPUT_DEBUG
+    Serial.print(PIN_TO_LABEL(_pinIn));
+    Serial.println(" : Set Callback onEnable");
+    #endif
     _cba=cb;
 }
 void OutputCore::onDisable(OutputCore_State_Callback cb ){
+    #ifdef _OUTPUT_DEBUG
+    Serial.print(PIN_TO_LABEL(_pinIn));
+    Serial.println(" : Set Callback onDisable");
+    #endif
     _cbna=cb;
 }
 void OutputCore::onChange(OutputCore_State_Callback cb){
+    #ifdef _OUTPUT_DEBUG
+    Serial.print(PIN_TO_LABEL(_pinIn));
+    Serial.println(" : Set Callback onChange");
+    #endif
     _cbc=cb;
 }
 bool OutputCore::isEnable(){
+    #ifdef _OUTPUT_DEBUG
+    Serial.print(PIN_TO_LABEL(_pinIn));
+    Serial.println(" : Hit isEnable"); 
+    #endif
     return !digitalRead(_pinIn);
 }
 void OutputCore::process(unsigned long now){
@@ -53,30 +69,60 @@ void OutputCore::process(unsigned long now){
         firstState=true;
         if(reading==LOW){
             if(_cba){
+                #ifdef _OUTPUT_DEBUG
+                Serial.print(PIN_TO_LABEL(_pinIn));
+                Serial.print(" : Hit First State Callback onEnable TimeStamp => ");
+                Serial.println(now +(now - lastDebounceTime));
+                #endif
                 _cba();
             }
         }else{
             if(_cbna){
+                #ifdef _OUTPUT_DEBUG
+                Serial.print(PIN_TO_LABEL(_pinIn));
+                Serial.print(" : Hit First State Callback onDisable TimeStamp => ");
+                Serial.println(now +(now - lastDebounceTime));
+                #endif
                 _cbna();
             }
         }
     }else{
         if (now - lastDebounceTime > debounceDelay) {
             if(reading!=lastState){
+                #ifdef _OUTPUT_DEBUG
+                Serial.print(PIN_TO_LABEL(_pinIn));
+                Serial.print(" : onChange TimeStamp =>"); 
+                Serial.println(now);
+                #endif
                     /* onChange */
                     if(_cbc){
+                        #ifdef _OUTPUT_DEBUG
+                        Serial.print(PIN_TO_LABEL(_pinIn));
+                        Serial.print(" : Hit Callback onChange TimeStamp => "); 
+                        Serial.println(now +(now - lastDebounceTime));
+                        #endif
                         _cbc();
                     }
                     /* ------- */
                 if(reading==LOW){
                     /* onEnable */
                     if(_cba){
+                        #ifdef _OUTPUT_DEBUG
+                        Serial.print(PIN_TO_LABEL(_pinIn));
+                        Serial.print(" : Hit Callback onEnable TimeStamp => "); 
+                        Serial.println(now +(now - lastDebounceTime));
+                        #endif
                         _cba();
                     }
                     /* ------- */
                 }else{
                     /* onDisable */
                     if(_cbna){
+                        #ifdef _OUTPUT_DEBUG
+                        Serial.print(PIN_TO_LABEL(_pinIn));
+                        Serial.print(" : Hit Callback onDisable TimeStamp => ");
+                        Serial.println(now +(now - lastDebounceTime));
+                        #endif
                         _cbna();
                     }
                     /* --------- */
@@ -88,10 +134,18 @@ void OutputCore::process(unsigned long now){
     }
 }
 bool OutputCore::enable(){
+    #ifdef _OUTPUT_DEBUG
+    Serial.print(PIN_TO_LABEL(_pinIn));
+    Serial.println(" : enable"); 
+    #endif
     digitalWrite(_pinIn,LOW);
     return digitalRead(_pinIn)==LOW;
 }
 bool OutputCore::disable(){
+    #ifdef _OUTPUT_DEBUG
+    Serial.print(PIN_TO_LABEL(_pinIn));
+    Serial.println(" : Hit disable");
+    #endif 
     digitalWrite(_pinIn,HIGH);
     return digitalRead(_pinIn)==HIGH;
 }

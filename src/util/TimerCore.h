@@ -34,36 +34,74 @@
     {
     }
     void Timer::start(){
+        #ifdef _TIMER_DEBUG
+        Serial.println("Timer : Start");
+        #endif
         _timestamp=millis();
         _isStarted=true;
-        if(_cb_started)_cb_started();
+        if(_cb_started){
+            #ifdef _TIMER_DEBUG
+            Serial.println("Timer : Hit Callback Started");
+            #endif
+            _cb_started();
+        }
     }
     void Timer::stop(){
         _isStarted=false;
-        if(_cb_stoped)_cb_stoped();
+        #ifdef _TIMER_DEBUG
+        Serial.println("Timer : Stop");
+        #endif
+        if(_cb_stoped){
+            #ifdef _TIMER_DEBUG
+            Serial.println("Timer : Hit Callback Stoped");
+            #endif
+            _cb_stoped();
+        }
     }
     void Timer::onTimeout(Timer_cb cb){
+        #ifdef _TIMER_DEBUG
+        Serial.println("Timer : Set Callback onTimeout");
+        #endif
         _cb_timeout = cb;
     }
     void Timer::onStarted(Timer_cb cb){
+        #ifdef _TIMER_DEBUG
+        Serial.println("Timer : Set Callback onStarted");
+        #endif
         _cb_started = cb;
     }
     void Timer::onStoped(Timer_cb cb){
+        #ifdef _TIMER_DEBUG
+        Serial.println("Timer : Set Callback onStoped");
+        #endif
         _cb_stoped = cb;
     }
     void Timer::process(unsigned long now){
         if (_isStarted){
             if(now - _timestamp > _interval){
-                if(_cb_timeout)_cb_timeout();
+                if(_cb_timeout){
+                    #ifdef _TIMER_DEBUG
+                        Serial.println("Timer : Hit Callback onTimeout");
+                    #endif
+                    _cb_timeout();
+                }
                 _timestamp=now;
             }
         }
     }
     bool Timer::isStarted(){
+        #ifdef _TIMER_DEBUG
+        Serial.println("Timer : Hit isStarted");
+        #endif
         return _isStarted;
         
     }
     void Timer::setInterval(unsigned long interval){
+        #ifdef _TIMER_DEBUG
+        Serial.print("Timer : setInterval to ");
+        Serial.print(interval);
+        Serial.println("ms.");
+        #endif
         _interval = interval;
         _timestamp=millis();
     }

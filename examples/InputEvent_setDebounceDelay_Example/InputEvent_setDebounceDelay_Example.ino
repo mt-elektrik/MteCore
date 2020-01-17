@@ -6,7 +6,7 @@
 */
 
 
-#define MTECORE_DEBUG //uncomment this line for debug
+// #define INPUT_DEBUG //uncomment this line for debug
 #include "MteCore.h"
 void setup(){
     Serial.begin(9600);

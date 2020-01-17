@@ -5,7 +5,7 @@
     IN3 = push button for toggle timer pulse OUT1 by 1 sec and OUT2 is the opposite of OUT1
     on this example 
 */
-#define MTECORE_DEBUG //uncomment this line for debug
+// #define OUTPUT_DEBUG //uncomment this line for debug
 #include "MteCore.h"
 Timer t(1000); //interval 1000 ms = 1 sec
 void setup(){

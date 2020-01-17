@@ -1,25 +1,4 @@
-
-  MteCore - Library For MTE Controller
-
-  Muara Teknik Elektrik
-  https://mt-elektrik.com/
-
-
-  Copyright 2020 Muara Teknik Elektrik
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
---------------------------------------------------------------------------------
-// OPTIONS MUST ALWAYS ON TOP
+// OPTIONS MUST ON TOP
 
 //*********DEBUG MODE*************
 //debug mode use serial for print any activity
@@ -68,6 +47,25 @@
 // #define _ENABLE_F8_PWM //uncomment this line for set pin F8 as PWM
 // #define _ENABLE_F8_UART //uncomment this line for set pin F8 as UART
 
+#define _DISABLE_IN1
+#define _DISABLE_IN2
+#define _DISABLE_IN3
+#define _DISABLE_IN4
+#define _DISABLE_IN5
+#define _DISABLE_IN6
+#define _DISABLE_IN7
+#define _DISABLE_IN8
+#define _DISABLE_IN9
+#define _DISABLE_IN10
+#define _DISABLE_IN11
+#define _DISABLE_IN12
+#define _DISABLE_OUT1
+#define _DISABLE_OUT2
+#define _DISABLE_OUT3
+#define _DISABLE_OUT4
+#define _DISABLE_OUT5
+#define _DISABLE_OUT6
+#define _DISABLE_OUT7
 #include "MteCore.h"
 void setup(){
 

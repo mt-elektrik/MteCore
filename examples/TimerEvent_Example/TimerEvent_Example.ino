@@ -4,6 +4,7 @@
     IN1 = toggle timer1
     IN2 = toggle timer2
 */
+// #define TIMER_DEBUG //uncomment this line for debug
 #include "MteCore.h";
 Timer timer1; //for OUT1
 Timer timer2; //for trigger counter1
@@ -12,7 +13,6 @@ Timer timer4(500); //for pulse OUT3 by 500 ms
 Counter counter1;
 void setup(){
     Serial.begin(9600);
-    
     //setup timer
     timer1.onStarted(
         [](){
