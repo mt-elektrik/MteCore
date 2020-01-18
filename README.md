@@ -19,6 +19,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --------------------------------------------------------------------------------
+EXAMPLE OPTIONS
 // OPTIONS MUST ALWAYS ON TOP
 
 //*********DEBUG MODE*************
@@ -28,6 +29,8 @@
 // #define _OUTPUT_DEBUG //uncomment this line for print output activity
 // #define _TIMER_DEBUG //uncomment this line for print timer activity
 // #define _COUNTER_DEBUG //uncomment this line for print counter activity
+// #define _ANALOG_DEBUG //uncomment this line for print counter activity
+
 //*********DISABLE PIN************
 //use this option to manage pin and save the memory
 // #define _DISABLE_{pin name} //uncomment this line for disable pin. 
@@ -39,7 +42,7 @@
     rou cannot use several functions on each pin.
     note : don't forget to change jumper to F on your board
     --------------------------------
-    **pin F mapping on board MTE-miniController V.2.0 (arduino promini)
+    **pin F mapping on board MTE-miniController V.2.0
     F1 => TX0
     F2 => RX0
     F3 => IN12 / i2c SDA / ANALOG1

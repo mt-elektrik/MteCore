@@ -1,3 +1,8 @@
+
+/*
+    18/01/2020 Muara Teknik Elektrik
+    Options Example
+*/
 // OPTIONS MUST ON TOP
 
 //*********DEBUG MODE*************
@@ -18,7 +23,7 @@
     rou cannot use several functions on each pin.
     note : don't forget to change jumper to F on your board
     --------------------------------
-    **pin F mapping on board MTE-miniController V.2.0 (arduino promini)
+    **pin F mapping on board MTE-miniController V.2.0
     F1 => TX0
     F2 => RX0
     F3 => IN12 / i2c SDA / ANALOG1
@@ -47,25 +52,6 @@
 // #define _ENABLE_F8_PWM //uncomment this line for set pin F8 as PWM
 // #define _ENABLE_F8_UART //uncomment this line for set pin F8 as UART
 
-#define _DISABLE_IN1
-#define _DISABLE_IN2
-#define _DISABLE_IN3
-#define _DISABLE_IN4
-#define _DISABLE_IN5
-#define _DISABLE_IN6
-#define _DISABLE_IN7
-#define _DISABLE_IN8
-#define _DISABLE_IN9
-#define _DISABLE_IN10
-#define _DISABLE_IN11
-#define _DISABLE_IN12
-#define _DISABLE_OUT1
-#define _DISABLE_OUT2
-#define _DISABLE_OUT3
-#define _DISABLE_OUT4
-#define _DISABLE_OUT5
-#define _DISABLE_OUT6
-#define _DISABLE_OUT7
 #include "MteCore.h"
 void setup(){
 

@@ -23,7 +23,7 @@
 #ifndef _MTE_CORE_H
 #define _MTE_CORE_H
 #include "Arduino.h"
-#if defined(INPUT_DEBUG) ||  defined(OUTPUT_DEBUG)
+#if defined(_INPUT_DEBUG) ||  defined(_OUTPUT_DEBUG) || defined(_ANALOG_DEBUG)
   //pin mapping for MTE-miniController V.2.0
   String PIN_TO_LABEL(uint8_t pin){
     switch (pin)
@@ -53,16 +53,31 @@
       return "IN8";
       break;
     case A7:
-      return "IN9";
+      #ifdef _ENABLE_F7_ANALOG
+        return "F7"
+      #else
+        return "IN9";
+      #endif
       break;
     case 9:
       return "IN10";
       break;
     case A6:
-      return "IN11";
+      #ifdef _ENABLE_F5_ANALOG
+        return "F5";
+      #else
+        return "IN11";
+      #endif
       break;
     case A4:
-      return "IN12";
+      #if defined(_ENABLE_F3_ANALOG) || defined(_ENABLE_F3_I2C)
+        return "F3"
+      #else
+        return "IN12";
+      #endif
+      break;
+    case A5:
+      return "F4";
       break;
       //output
     case A3:
