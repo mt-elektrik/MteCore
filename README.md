@@ -1,4 +1,5 @@
 # MteCore - Library For MTE Controller #
+[Muara Teknik Elektrik](https://mt-elektrik.com/)
 
 ----
 
@@ -44,7 +45,7 @@ Unzip the folder and rename it to `MteCore`, then move it to your `arduinosketch
 
 ## Usage Example ##
 
-# Input Example #
+## Input Example ##
 ```
 /*
     14/01/2020 Muara Teknik Elektrik
@@ -161,7 +162,7 @@ void callback_IN7_OnChange(){
 }
 ```
 
-# Analog Example #
+## Analog Example ##
 ```
 //Change the jumper to F5 on the SELECTOR PIN to activate F5,
 #define _ENABLE_F5_ANALOG //Enable F5 as Analog Function
@@ -183,7 +184,7 @@ void loop(){
 }
 ```
 
-# PWM Example #
+## PWM Example ##
 ```
 #define _ENABLE_F5_ANALOG //uncomment this line for set pin F5 as Analog
 #define _ENABLE_F6_PWM //uncomment this line for set pin F6 as PWM
@@ -208,5 +209,5 @@ void loop(){
     process();
 }
 ```
-# This is only a small part of the convenience of this library, download and install this library for more examples #
+## This is only a small part of the convenience of this library, download and install this library for more examples ##
 ----
