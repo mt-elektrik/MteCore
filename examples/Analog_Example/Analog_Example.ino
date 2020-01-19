@@ -1,4 +1,6 @@
 /*
+    19/01/2020 Muara Teknik Elektrik
+    Analog Example
 --------------------------------
     **pin F mapping on board MTE-miniController V.2.0
     F1 => TX0

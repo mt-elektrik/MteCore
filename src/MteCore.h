@@ -115,6 +115,9 @@
 #if defined(_ENABLE_F3_ANALOG) || defined(_ENABLE_F4_ANALOG) || defined(_ENABLE_F5_ANALOG) || defined(_ENABLE_F7_ANALOG)
   #include "util/AnalogCore.h"
 #endif
+#if defined(_ENABLE_F6_PWM) || defined(_ENABLE_F8_PWM)
+  #include "util/PWMCore.h"
+#endif
 #ifndef _DISABLE_IN1
   InputCore IN1(2);
 #endif
@@ -138,6 +141,7 @@
 #endif
 //Settings IN8
 #ifdef _ENABLE_F8_PWM
+  PWMCore F8(10);
 #elif defined(_ENABLE_F8_UART)
 #else
   #ifndef _DISABLE_IN8
@@ -156,6 +160,7 @@
 //end Settings
 //Settings IN10
 #ifdef _ENABLE_F6_PWM
+  PWMCore F6(9);
 #elif defined(_ENABLE_F6_UART)
 #else
   #ifndef _DISABLE_IN10
@@ -173,6 +178,16 @@
 #endif
 //end Settings
 
+#ifdef _ENABLE_F4_ANALOG
+    AnalogCore F4(A5); //enable F4 as Analog
+#elif defined(_ENABLE_F4_I2C)
+  #ifndef _ENABLE_F3_I2C
+    #error "Cannot enable F4 when F3 as I2C is disable!"
+  #else
+    //enable i2c F4
+  #endif
+#endif
+
 //Settings IN12
 #ifdef _ENABLE_F3_ANALOG
         AnalogCore F3(A4); //enable F3 as Analog
@@ -189,15 +204,6 @@
 #endif
 //end Settings IN12
 
-#ifdef _ENABLE_F4_ANALOG
-    AnalogCore F4(A5); //enable F4 as Analog
-#elif defined(_ENABLE_F4_I2C)
-  #ifndef _ENABLE_F3_I2C
-    #error "Cannot enable F4 when F3 as I2C is disable!"
-  #else
-    //enable i2c F4
-  #endif
-#endif
 //OUTPUT
 #ifndef _DISABLE_OUT1
   OutputCore OUT1(A3);
@@ -223,59 +229,81 @@
 
 void process(){
   unsigned long now = millis();
-#ifndef _DISABLE_IN1
-  IN1.process(now);
-#endif
-#ifndef _DISABLE_IN2
-  IN2.process(now);
-#endif
-#ifndef _DISABLE_IN3
-  IN3.process(now);
-#endif
-#ifndef _DISABLE_IN4
-  IN4.process(now);
-#endif
-#ifndef _DISABLE_IN5
-  IN5.process(now);
-#endif
-#ifndef _DISABLE_IN6
-  IN6.process(now);
-#endif
-#ifndef _DISABLE_IN7
-  IN7.process(now);
-#endif
-#ifndef _DISABLE_IN8
-  IN8.process(now);
-#endif
-  #ifndef _ENABLE_F7_ANALOG
+  #ifndef _DISABLE_IN1
+    IN1.process(now);
+  #endif
+  #ifndef _DISABLE_IN2
+    IN2.process(now);
+  #endif
+  #ifndef _DISABLE_IN3
+    IN3.process(now);
+  #endif
+  #ifndef _DISABLE_IN4
+    IN4.process(now);
+  #endif
+  #ifndef _DISABLE_IN5
+    IN5.process(now);
+  #endif
+  #ifndef _DISABLE_IN6
+    IN6.process(now);
+  #endif
+  #ifndef _DISABLE_IN7
+    IN7.process(now);
+  #endif
+//-------F8-----------------------------
+  #if defined(_ENABLE_F8_PWM)
+    #ifdef _ENABLE_SMOOTH_PWM
+      F8.process(now);
+    #endif
+  #elif defined(_ENABLE_F8_UART)
+  #else
+    #ifndef _DISABLE_IN8
+      IN8.process(now);
+    #endif
+  #endif
+//-------F7-----------------------------
+  #ifdef _ENABLE_F7_ANALOG
+    F7.process(now); //F7 analog process
+  #else
     #ifndef _DISABLE_IN9
       IN9.process(now);
     #endif
-  #else
-    F7.process(now); //F7 analog process
   #endif
-#ifndef _DISABLE_IN10
-  IN10.process(now);
-#endif
-  #ifndef _ENABLE_F5_ANALOG
+//-------F6-----------------------------
+  #if defined(_ENABLE_F6_PWM)
+    #ifdef _ENABLE_SMOOTH_PWM
+      F6.process(now);
+    #endif
+  #elif defined(_ENABLE_F6_UART)
+  #else
+      #ifndef _DISABLE_IN10
+        IN10.process(now);
+      #endif
+  #endif
+//-------F5-----------------------------
+  #ifdef _ENABLE_F5_ANALOG
+    F5.process(now); //F5 analog process
+  #else
     #ifndef _DISABLE_IN11
       IN11.process(now);
     #endif
-  #else
-    F5.process(now); //F5 analog process
   #endif
+//-------F4-----------------------------
+  #ifdef _ENABLE_F4_I2C
 
-  #ifdef _ENABLE_F4_ANALOG
+  #elif _ENABLE_F4_ANALOG
     F4.process(now); //F4 analog process
   #endif
-
-  #ifndef _ENABLE_F3_ANALOG
+//-------F3-----------------------------
+  #ifdef _ENABLE_F3_ANALOG
+    F3.process(now); //F3 Analog process
+  #elif defined(_ENABLE_F3_I2C)
+  #else
     #ifndef _DISABLE_IN10
       IN12.process(now);
     #endif
-  #else
-    F3.process(now); //F3 Analog process
   #endif
+
   //-----------OUTPUT process
   #ifndef _DISABLE_OUT1
     OUT1.process(now);

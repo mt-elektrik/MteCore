@@ -17,6 +17,7 @@
         ~AnalogCore();
         void onChange(analog_core_callback cb);
         void process(unsigned long now);
+        uint16_t getValue();
     };
     
     AnalogCore::AnalogCore(uint8_t pinIn)
@@ -66,6 +67,13 @@
             _timeStamp = now;
         }
     }
-    
+    uint16_t AnalogCore::getValue(){
+        return countVal/indexVal;
+        #ifdef _ANALOG_DEBUG
+            Serial.print(PIN_TO_LABEL(_pinIn));
+            Serial.print(" : Hit getValue = ");
+            Serial.println(countVal/indexVal);
+        #endif
+    }
     #endif //_ANALOG_CORE_H
 // #endif // _MTE_CORE_H
