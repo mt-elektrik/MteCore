@@ -6,6 +6,7 @@
 
 #define _ENABLE_F5_ANALOG //uncomment this line for set pin F5 as Analog
 #define _ENABLE_F6_PWM //uncomment this line for set pin F6 as PWM
+// #define _PWM_DEBUG //uncomment this line for print pwm activity
 #include "MteCore.h"
 void setup(){
     Serial.begin(9600);

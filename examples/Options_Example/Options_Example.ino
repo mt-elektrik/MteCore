@@ -12,6 +12,8 @@
 // #define _OUTPUT_DEBUG //uncomment this line for print output activity
 // #define _TIMER_DEBUG //uncomment this line for print timer activity
 // #define _COUNTER_DEBUG //uncomment this line for print counter activity
+// #define _ANALOG_DEBUG //uncomment this line for print analog activity
+// #define _PWM_DEBUG //uncomment this line for print pwm activity
 //*********DISABLE PIN************
 //use this option to manage pin and save the memory
 // #define _DISABLE_{pin name} //uncomment this line for disable pin. 

@@ -23,6 +23,8 @@ void setup(){
     F5.onChange(
         [](uint16_t val){
              Serial.println(val);
+             //or
+            //  Serial.println(F5.getValue());
         }
     );
 }

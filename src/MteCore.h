@@ -23,11 +23,17 @@
 #ifndef _MTE_CORE_H
 #define _MTE_CORE_H
 #include "Arduino.h"
-#if defined(_INPUT_DEBUG) ||  defined(_OUTPUT_DEBUG) || defined(_ANALOG_DEBUG)
+#if defined(_INPUT_DEBUG) ||  defined(_OUTPUT_DEBUG) || defined(_ANALOG_DEBUG) || defined(_ANALOG_DEBUG) || defined(_PWM_DEBUG)
   //pin mapping for MTE-miniController V.2.0
   String PIN_TO_LABEL(uint8_t pin){
     switch (pin)
     {
+    case 0:
+      return "F1";
+      break;
+    case 1:
+      return "F2";
+      break;
     case 2:
       return "IN1";
       break;
@@ -50,7 +56,11 @@
       return "IN7";
       break;
     case 10:
-      return "IN8";
+      #if defined(_ENABLE_F8_PWM) || defined(_ENABLE_F8_UART)
+        return "F8";
+      #else
+        return "IN8";
+      #endif
       break;
     case A7:
       #ifdef _ENABLE_F7_ANALOG
@@ -60,7 +70,11 @@
       #endif
       break;
     case 9:
-      return "IN10";
+      #if defined(_ENABLE_F6_PWM) || defined(_ENABLE_F6_UART)
+        return "F6";
+      #else
+        return "IN10";
+      #endif
       break;
     case A6:
       #ifdef _ENABLE_F5_ANALOG
@@ -143,6 +157,11 @@
 #ifdef _ENABLE_F8_PWM
   PWMCore F8(10);
 #elif defined(_ENABLE_F8_UART)
+  #ifdef _ENABLE_F6_UART
+    #error "Cannot enable F8 as UART when F6 as UART is disable!"
+  #else
+    #define F8 10;
+  #endif
 #else
   #ifndef _DISABLE_IN8
     InputCore IN8(10);
@@ -162,6 +181,11 @@
 #ifdef _ENABLE_F6_PWM
   PWMCore F6(9);
 #elif defined(_ENABLE_F6_UART)
+  #ifdef _ENABLE_F8_UART
+    #error "Cannot enable F6 as UART when F8 as UART is disable!"
+  #else
+    #define F6 9
+  #endif
 #else
   #ifndef _DISABLE_IN10
     InputCore IN10(9);
@@ -182,7 +206,7 @@
     AnalogCore F4(A5); //enable F4 as Analog
 #elif defined(_ENABLE_F4_I2C)
   #ifndef _ENABLE_F3_I2C
-    #error "Cannot enable F4 when F3 as I2C is disable!"
+    #error "Cannot enable F4 as I2C when F3 as I2C is disable!"
   #else
     //enable i2c F4
   #endif
@@ -193,7 +217,7 @@
         AnalogCore F3(A4); //enable F3 as Analog
 #elif defined(_ENABLE_F3_I2C)
   #ifndef _ENABLE_F4_I2C
-    #error "Cannot enable F3 when F4 as I2C is disable!"
+    #error "Cannot enable F3 as I2C when F4 as I2C is disable!"
   #else
     //enable i2c F3
   #endif

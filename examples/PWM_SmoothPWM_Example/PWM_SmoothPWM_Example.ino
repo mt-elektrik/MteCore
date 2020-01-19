@@ -9,6 +9,7 @@
 #define _ENABLE_F8_PWM //uncomment this line for set pin F8 as PWM
 #define _ENABLE_SMOOTH_PWM //uncomment this line to enable smooth PWM function
 #define _DELAY_SMOOTH_PWM 5000 //uncomment this line to set delay smooth pwm 5000ms (if not set,delay smooth PWM by default 1000ms)
+// #define _PWM_DEBUG //uncomment this line for print pwm activity
 #include "MteCore.h"
     bool isZero=true;
 void setup(){
