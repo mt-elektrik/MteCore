@@ -211,3 +211,4 @@ void loop(){
 ```
 ## This is only a small part of the convenience of this library, download and install this library for more examples ##
 ----
+![alt text](https://raw.githubusercontent.com/mt-elektrik/MteCore/master/board/MTE-miniController/V2.0/miniCV2.0.jpg)
